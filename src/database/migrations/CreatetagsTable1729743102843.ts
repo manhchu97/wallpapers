@@ -8,14 +8,19 @@ export class CreatetagsTable1729743102843 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'uuid', 
             isPrimary: true,
             isGenerated: true,
-            generationStrategy: 'increment',
+            generationStrategy: 'uuid',
           },
           {
             name: 'slug',
             type: 'text',
+            isNullable: true,
+          },
+          {
+            name: 'resource_id',
+            type: 'varchar',
             isNullable: true,
           },
           {
@@ -30,23 +35,25 @@ export class CreatetagsTable1729743102843 implements MigrationInterface {
           },
           {
             name: 'preview_id',
-            type: 'varchar',
+            type: 'uuid',
             isNullable: true,
           },
           {
             name: 'thumbnail_id',
-            type: 'varchar',
+            type: 'uuid',
             isNullable: true,
           },
           {
             name: 'created_timestamp',
             type: 'timestamp',
-            default: 'CURRENT_TIMESTAMP',
+            isNullable: false, // Có thể thêm isNullable nếu cần thiết
+            default: 'CURRENT_TIMESTAMP', // Đảm bảo rằng không có lỗi cú pháp
           },
           {
             name: 'updated_timestamp',
             type: 'timestamp',
-            default: 'CURRENT_TIMESTAMP',
+            isNullable: false, // Có thể thêm isNullable nếu cần thiết
+            default: 'CURRENT_TIMESTAMP', // Đảm bảo rằng không có lỗi cú pháp
           },
           {
             name: 'deleted_timestamp',

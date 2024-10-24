@@ -7,6 +7,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { databaseConfig } from 'config/database.config';
 import { UsersModule } from './users/users.module';
 import { tagsModule } from './tags/tags.module';
+import { FilesModule } from './files/files.module';
+import { WallpaperModule } from './wallpaper/wallpaper.module';
 
 @Module({
   imports: [
@@ -18,7 +20,9 @@ import { tagsModule } from './tags/tags.module';
       useFactory: databaseConfig,
     }),
     UsersModule,
-    tagsModule
+    tagsModule,
+    FilesModule,
+    WallpaperModule,
   ],
   controllers: [AppController],
   providers: [AppService],

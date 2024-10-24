@@ -28,12 +28,12 @@ export class UsersService {
     return this.usersRepository.findOne(option);
   }
 
-  async update(id: number, updateUsersDto: UpdateUsersDto): Promise<Users> {
+  async update(id: string, updateUsersDto: UpdateUsersDto): Promise<Users> {
     await this.usersRepository.update(id, updateUsersDto);
     return this.findOne(id);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.usersRepository.delete(id);
   }
 }

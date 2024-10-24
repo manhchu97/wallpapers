@@ -107,17 +107,17 @@ export class ${name}Controller {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.${name.toLowerCase()}Service.findOne(+id);
+    return this.${name.toLowerCase()}Service.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() update${name}Dto: Update${name}Dto) {
-    return this.${name.toLowerCase()}Service.update(+id, update${name}Dto);
+    return this.${name.toLowerCase()}Service.update(id, update${name}Dto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.${name.toLowerCase()}Service.remove(+id);
+    return this.${name.toLowerCase()}Service.remove(id);
   }
 }
   `;
@@ -157,7 +157,7 @@ export class ${name}Service {
     return paginate<${name}>(queryBuilder, options);
   }
 
-  async findOne(id: number): Promise<${name}> {
+  async findOne(id: string): Promise<${name}> {
     return this.${name.toLowerCase()}Repository.findOne({
       where : {
         id
@@ -165,12 +165,12 @@ export class ${name}Service {
     });
   }
 
-  async update(id: number, update${name}Dto: Update${name}Dto): Promise<${name}> {
+  async update(id: string, update${name}Dto: Update${name}Dto): Promise<${name}> {
     await this.${name.toLowerCase()}Repository.update(id, update${name}Dto);
     return this.findOne(id);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.${name.toLowerCase()}Repository.delete(id);
   }
 }
@@ -259,7 +259,7 @@ function createEntity(path: string, name: string, columns: any[]) {
 @Entity()
 export class ${name} {
   @PrimaryGeneratedColumn()
-  id: number;${columnsDefinitions};
+  id: string;${columnsDefinitions};
   
   @Column('timestamp', {
     name: 'created_timestamp',
@@ -308,12 +308,12 @@ export class ${migrationFileName} implements MigrationInterface {
       new Table({
         name: '${name.toLowerCase()}',
         columns: [
-          {
+           {
             name: 'id',
-            type: 'int',
+            type: 'char',
             isPrimary: true,
             isGenerated: true,
-            generationStrategy: 'increment',
+            generationStrategy: 'uuid',
           },${columnDefinitions}
           {
             name: 'created_timestamp',

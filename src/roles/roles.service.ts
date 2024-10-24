@@ -24,7 +24,7 @@ export class RolesService {
     return paginate<Roles>(queryBuilder, options);
   }
 
-  async findOne(id: number): Promise<Roles> {
+  async findOne(id: string): Promise<Roles> {
     return this.rolesRepository.findOne({
       where : {
         id
@@ -32,12 +32,12 @@ export class RolesService {
     });
   }
 
-  async update(id: number, updateRolesDto: UpdateRolesDto): Promise<Roles> {
+  async update(id: string, updateRolesDto: UpdateRolesDto): Promise<Roles> {
     await this.rolesRepository.update(id, updateRolesDto);
     return this.findOne(id);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.rolesRepository.delete(id);
   }
 }

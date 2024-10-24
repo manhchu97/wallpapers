@@ -7,9 +7,4 @@ export class CreateTagsDto {
   @IsNotEmpty()
   type: string;
 
-  @IsNotEmpty()
-  previewId: string;
-
-  @IsNotEmpty()
-  thumbnailId: string;
 }

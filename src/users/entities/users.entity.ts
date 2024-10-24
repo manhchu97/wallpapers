@@ -13,7 +13,7 @@ export const USER_STATUS = {
 @Entity()
 export class Users {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column('varchar', { name: 'email' })
   email: string;
@@ -25,7 +25,7 @@ export class Users {
   lastName: string;
 
   @Column('int', { name: 'role_id' })
-  roleId: number;
+  roleid: string;
 
   @Column('varchar', { name: 'password' })
   password: string;
