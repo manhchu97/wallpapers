@@ -32,7 +32,6 @@ export class WallpaperService {
     const fs = require('fs');
     const data = await fs.readFileSync(
       '/Users/macos/project/private/wallpapers/list-wallpapers.json',
-
     );
     const wallpapers = JSON.parse(data);
     const listTag = await this.tagRepo.find();
@@ -138,9 +137,16 @@ export class WallpaperService {
     return this.wallpaperRepository.save(wallpaper);
   }
 
-  async findAll(options: IPaginationOptions, query) {
-    const queryBuilder: SelectQueryBuilder<Wallpaper> =
-      this.wallpaperRepository.createQueryBuilder('wallpaper');
+  async findAll(options: IPaginationOptions, query: any) {
+    const queryBuilder: SelectQueryBuilder<Wallpaper> = this.wallpaperRepository
+      .createQueryBuilder('wallpaper')
+      .leftJoinAndSelect('wallpaper.image', 'image')
+      .leftJoinAndSelect('wallpaper.thumbnail', 'thumbnail')
+      .leftJoinAndSelect('wallpaper.tags', 'tags')
+
+    if (query.tagSlug) {
+      queryBuilder.where('tags.slug = :slug', { slug: query.tagSlug });
+    }
     return paginate<Wallpaper>(queryBuilder, options);
   }
 

@@ -1,5 +1,13 @@
-
-import { Controller, Get, Post, Body, Param, Delete, Patch, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Patch,
+  Query,
+} from '@nestjs/common';
 import { WallpaperService } from './wallpaper.service';
 import { CreateWallpaperDto } from './dto/create-wallpaper.dto';
 import { UpdateWallpaperDto } from './dto/update-wallpaper.dto';
@@ -9,8 +17,8 @@ export class WallpaperController {
   constructor(private readonly wallpaperService: WallpaperService) {}
 
   @Get('init-wallpaper')
-  async initWallpaper(){
-    return await this.wallpaperService.init()
+  async initWallpaper() {
+    return await this.wallpaperService.init();
   }
 
   @Post()
@@ -24,7 +32,7 @@ export class WallpaperController {
     @Query('limit') limit: number = 10,
     @Query() query: any,
   ) {
-    return this.wallpaperService.findAll({page,limit},query);
+    return this.wallpaperService.findAll({ page, limit }, query);
   }
 
   @Get(':id')
@@ -33,7 +41,10 @@ export class WallpaperController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWallpaperDto: UpdateWallpaperDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateWallpaperDto: UpdateWallpaperDto,
+  ) {
     return this.wallpaperService.update(id, updateWallpaperDto);
   }
 
@@ -42,4 +53,3 @@ export class WallpaperController {
     return this.wallpaperService.remove(id);
   }
 }
-  

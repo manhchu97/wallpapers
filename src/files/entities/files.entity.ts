@@ -1,4 +1,5 @@
 import { Tags } from 'src/tags/entities/tags.entity';
+import { Wallpaper } from 'src/wallpaper/entities/wallpaper.entity';
 import {
   Entity,
   Column,
@@ -7,6 +8,8 @@ import {
   ManyToOne,
   JoinColumn,
   OneToOne,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 @Entity()
@@ -59,4 +62,20 @@ export class Files {
 
   @OneToOne(() => Tags, (tag) => tag.thumbnail, { persistence: false })
   thumbnailTag?: File[];
+
+  @OneToOne(() => Wallpaper, (wallpaper) => wallpaper.image, { persistence: false })
+  imageWallpaper?: File[];
+
+
+  @OneToOne(() => Wallpaper, (wallpaper) => wallpaper.thumbnail, { persistence: false })
+  thumbnailWallpaper?: File[];
+
+
+  @ManyToMany(() => Wallpaper, (wallpaper) => wallpaper.lives, { persistence: false })
+  @JoinTable({
+    name: 'wallpaper_lives',
+    joinColumn: { name: 'file_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'wallpaper_id', referencedColumnName: 'id' },
+  })
+  wallpapers?: Wallpaper[];
 }

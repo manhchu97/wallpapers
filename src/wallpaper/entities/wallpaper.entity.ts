@@ -1,8 +1,14 @@
+import { Files } from 'src/files/entities/files.entity';
+import { Tags } from 'src/tags/entities/tags.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   DeleteDateColumn,
+  OneToOne,
+  JoinColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 @Entity()
@@ -29,4 +35,37 @@ export class Wallpaper {
 
   @DeleteDateColumn({ name: 'deleted_timestamp' })
   deletedTimestamp: Date;
+
+  @OneToOne(() => Files, (file) => file.imageWallpaper, {
+    nullable: true,
+  })
+  @JoinColumn({ name: 'image_id' })
+  image: Files;
+
+  @OneToOne(() => Files, (file) => file.thumbnailWallpaper, {
+    nullable: true,
+  })
+  @JoinColumn({ name: 'thumbnail_id' })
+  thumbnail: Files;
+
+  @ManyToMany(() => Files, (file) => file.wallpapers, {
+    persistence: false,
+  })
+  @JoinTable({
+    name: 'wallpaper_lives',
+    joinColumn: { name: 'wallpaper_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'file_id', referencedColumnName: 'id' },
+  })
+  lives?: Files[];
+
+
+  @ManyToMany(() => Tags, (tag) => tag.wallpapers, {
+    persistence: false,
+  })
+  @JoinTable({
+    name: 'wallpaper_tags',
+    joinColumn: { name: 'wallpaper_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'tag_id', referencedColumnName: 'id' },
+  })
+  tags?: Tags[];
 }

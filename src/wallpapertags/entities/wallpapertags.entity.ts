@@ -1,10 +1,9 @@
-
-  import {
-    Entity,
-    Column,
-    PrimaryGeneratedColumn,
-    DeleteDateColumn,
-  } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  DeleteDateColumn,
+} from 'typeorm';
 
 @Entity('wallpaper_tags')
 export class WallpaperTags {
@@ -16,8 +15,7 @@ export class WallpaperTags {
 
   @Column('varchar', { name: 'tag_id' })
   tagId: string;
-;
-  
+
   @Column('timestamp', {
     name: 'created_timestamp',
     default: () => 'CURRENT_TIMESTAMP',
@@ -30,4 +28,3 @@ export class WallpaperTags {
   @DeleteDateColumn({ name: 'deleted_timestamp' })
   deletedTimestamp: Date;
 }
-  

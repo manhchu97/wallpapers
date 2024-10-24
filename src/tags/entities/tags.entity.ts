@@ -1,4 +1,5 @@
 import { Files } from 'src/files/entities/files.entity';
+import { Wallpaper } from 'src/wallpaper/entities/wallpaper.entity';
 import {
   Entity,
   Column,
@@ -6,6 +7,8 @@ import {
   DeleteDateColumn,
   OneToOne,
   JoinColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 @Entity()
@@ -54,4 +57,13 @@ export class Tags {
   })
   @JoinColumn({ name: 'thumbnail_id' })
   thumbnail: Files;
+
+
+  @ManyToMany(() => Wallpaper, (wallpaper) => wallpaper.tags, { persistence: false })
+  @JoinTable({
+    name: 'wallpaper_tags',
+    joinColumn: { name: 'tag_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'wallpaper_id', referencedColumnName: 'id' },
+  })
+  wallpapers?: Wallpaper[];
 }
