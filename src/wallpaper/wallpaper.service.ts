@@ -142,10 +142,10 @@ export class WallpaperService {
       .createQueryBuilder('wallpaper')
       .leftJoinAndSelect('wallpaper.image', 'image')
       .leftJoinAndSelect('wallpaper.thumbnail', 'thumbnail')
-      .leftJoinAndSelect('wallpaper.tags', 'tags')
+      .orderBy('wallpaper.id', 'DESC');
 
-    if (query.tagSlug) {
-      queryBuilder.where('tags.slug = :slug', { slug: query.tagSlug });
+    if (query.tagId) {
+      queryBuilder.where('tags.id = :id', { slug: query.tagId });
     }
     return paginate<Wallpaper>(queryBuilder, options);
   }

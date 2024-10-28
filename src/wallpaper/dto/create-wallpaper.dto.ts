@@ -3,7 +3,7 @@ import { IsNotEmpty } from 'class-validator';
 
 export class CreateWallpaperDto {
   @IsNotEmpty()
-  resourceId: string;
+  resourceId: number;
   @IsNotEmpty()
   image_id: string;
   @IsNotEmpty()

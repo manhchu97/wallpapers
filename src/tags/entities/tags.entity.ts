@@ -19,8 +19,8 @@ export class Tags {
   @Column('varchar', { name: 'title' })
   title: string;
 
-  @Column('varchar', { name: 'resource_id' })
-  resourceId: string;
+  @Column('int', { name: 'resource_id' })
+  resourceId: number;
 
   @Column('text', { name: 'slug' })
   slug: string; 

@@ -29,7 +29,7 @@ export class WallpaperController {
   @Get()
   findAll(
     @Query('page') page: number = 1,
-    @Query('limit') limit: number = 10,
+    @Query('limit') limit: number = 50,
     @Query() query: any,
   ) {
     return this.wallpaperService.findAll({ page, limit }, query);

@@ -15,8 +15,9 @@ import {
 export class Wallpaper {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-  @Column('varchar', { name: 'resource_id' })
-  resourceId: string;
+  
+  @Column('int', { name: 'resource_id' })
+  resourceId: number;
 
   @Column('varchar', { name: 'image_id' })
   imageId: string;
