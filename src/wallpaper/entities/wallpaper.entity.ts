@@ -15,7 +15,7 @@ import {
 export class Wallpaper {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-  
+
   @Column('int', { name: 'resource_id' })
   resourceId: number;
 
@@ -24,6 +24,12 @@ export class Wallpaper {
 
   @Column('varchar', { name: 'thumbnail_id' })
   thumbnailId: string;
+
+  @Column('boolean', { name: 'premium' })
+  premium: boolean;
+
+  @Column('boolean', { name: 'visible' })
+  visible: boolean;
 
   @Column('timestamp', {
     name: 'created_timestamp',
@@ -58,7 +64,6 @@ export class Wallpaper {
     inverseJoinColumn: { name: 'file_id', referencedColumnName: 'id' },
   })
   lives?: Files[];
-
 
   @ManyToMany(() => Tags, (tag) => tag.wallpapers, {
     persistence: false,

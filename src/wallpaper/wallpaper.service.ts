@@ -145,8 +145,26 @@ export class WallpaperService {
       .orderBy('wallpaper.id', 'DESC');
 
     if (query.tagId) {
-      queryBuilder.where('tags.id = :id', { slug: query.tagId });
+      queryBuilder.where(
+        `EXISTS (
+          SELECT 1 FROM wallpaper_tags wt
+          WHERE wt.wallpaper_id = wallpaper.id AND wt.tag_id = :tagId
+        )`,
+        { tagId: query.tagId },
+      );
     }
+
+    if (query.tag) {
+      queryBuilder.where(
+        `EXISTS (
+          SELECT 1 FROM wallpaper_tags wt
+          INNER JOIN tags t ON wt.tag_id = t.id
+          WHERE wt.wallpaper_id = wallpaper.id AND t.slug = :tag
+        )`,
+        { tag: query.tag },
+      );
+    }
+
     return paginate<Wallpaper>(queryBuilder, options);
   }
 
