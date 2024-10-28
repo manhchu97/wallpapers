@@ -137,6 +137,22 @@ export class WallpaperService {
     return this.wallpaperRepository.save(wallpaper);
   }
 
+  async findAllRank(options: IPaginationOptions) {
+    const queryBuilder: SelectQueryBuilder<Wallpaper> = this.wallpaperRepository
+      .createQueryBuilder('wallpaper')
+      .leftJoinAndSelect('wallpaper.image', 'image')
+      .leftJoinAndSelect('wallpaper.thumbnail', 'thumbnail')
+      .leftJoinAndSelect('wallpaper.stats', 'stats')
+      .orderBy(
+        'CASE WHEN stats.likesCount IS NULL THEN 1 ELSE 0 END', 
+        'ASC' 
+      )
+      .addOrderBy('stats.likesCount', 'DESC'); 
+  
+    return paginate<Wallpaper>(queryBuilder, options);
+  }
+  
+
   async findAll(options: IPaginationOptions, query: any) {
     const queryBuilder: SelectQueryBuilder<Wallpaper> = this.wallpaperRepository
       .createQueryBuilder('wallpaper')

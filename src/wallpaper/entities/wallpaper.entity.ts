@@ -1,4 +1,5 @@
 import { Files } from 'src/files/entities/files.entity';
+import { Stats } from 'src/stats/entities/stats.entity';
 import { Tags } from 'src/tags/entities/tags.entity';
 import {
   Entity,
@@ -74,4 +75,9 @@ export class Wallpaper {
     inverseJoinColumn: { name: 'tag_id', referencedColumnName: 'id' },
   })
   tags?: Tags[];
+
+  @OneToOne(() => Stats, (stats) => stats.wallpaper, {
+    persistence: false,
+  })
+  stats?: Stats;
 }

@@ -26,6 +26,14 @@ export class WallpaperController {
     return this.wallpaperService.create(createWallpaperDto);
   }
 
+  @Get('ranked')
+  findAllRank(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 50,
+  ) {
+    return this.wallpaperService.findAllRank({ page, limit });
+  }
+
   @Get()
   findAll(
     @Query('page') page: number = 1,
