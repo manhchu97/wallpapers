@@ -143,6 +143,7 @@ export class WallpaperService {
       .leftJoinAndSelect('wallpaper.image', 'image')
       .leftJoinAndSelect('wallpaper.thumbnail', 'thumbnail')
       .leftJoinAndSelect('wallpaper.stats', 'stats')
+      .leftJoinAndSelect('wallpaper.lives', 'lives')
       .orderBy(
         'CASE WHEN stats.likesCount IS NULL THEN 1 ELSE 0 END', 
         'ASC' 
@@ -158,6 +159,7 @@ export class WallpaperService {
       .createQueryBuilder('wallpaper')
       .leftJoinAndSelect('wallpaper.image', 'image')
       .leftJoinAndSelect('wallpaper.thumbnail', 'thumbnail')
+      .leftJoinAndSelect('wallpaper.lives', 'lives')
       .orderBy('wallpaper.id', 'DESC');
 
     if (query.tagId) {
