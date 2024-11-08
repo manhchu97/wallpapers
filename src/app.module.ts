@@ -11,7 +11,6 @@ import { FilesModule } from './files/files.module';
 import { WallpaperModule } from './wallpaper/wallpaper.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { StatsModule } from './stats/stats.module';
-import { VideoModule } from './videos/videos.module';
 
 @Module({
   imports: [
@@ -31,7 +30,6 @@ import { VideoModule } from './videos/videos.module';
     FilesModule,
     WallpaperModule,
     StatsModule,
-    VideoModule
   ],
   controllers: [AppController],
   providers: [AppService],
