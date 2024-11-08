@@ -5215,7 +5215,7 @@ export class tagsService {
       };
     });
 
-    return convertTags
+    return _.filter(convertTags,tag => tag.count > 0)
   }
 
   async findOne(id: string): Promise<Tags> {
