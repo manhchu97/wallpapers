@@ -144,11 +144,7 @@ export class WallpaperService {
       .leftJoinAndSelect('wallpaper.thumbnail', 'thumbnail')
       .leftJoinAndSelect('wallpaper.stats', 'stats')
       .leftJoinAndSelect('wallpaper.lives', 'lives')
-      .orderBy(
-        'CASE WHEN stats.likesCount IS NULL THEN 1 ELSE 0 END', 
-        'ASC' 
-      )
-      .addOrderBy('stats.likesCount', 'DESC'); 
+      .orderBy('stats.likesCount', 'DESC'); 
   
     return paginate<Wallpaper>(queryBuilder, options);
   }
