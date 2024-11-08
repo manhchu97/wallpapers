@@ -7,6 +7,7 @@ import { Tags } from './entities/tags.entity';
 import { CreateTagsDto } from './dto/create-tags.dto';
 import slug from 'slugify';
 import { Files } from 'src/files/entities/files.entity';
+import * as _ from 'lodash';
 @Injectable()
 export class tagsService {
   constructor(
@@ -5179,7 +5180,7 @@ export class tagsService {
         if (saveThumb) data.thumbnailId = saveThumb.id;
       }
 
-      console.log(data)
+      console.log(data);
       await this.tagsRepository.save(data as any);
     }
 
@@ -5194,15 +5195,27 @@ export class tagsService {
   async findAll(query) {
     const queryTag = await this.tagsRepository
       .createQueryBuilder('tags')
-      .leftJoinAndSelect('tags.image','image')
-      .leftJoinAndSelect('tags.thumbnail','thumbnail')
+      .leftJoinAndSelect('tags.image', 'image')
+      .leftJoinAndSelect('tags.thumbnail', 'thumbnail')
+      .leftJoinAndSelect('tags.wallpapers', 'wallpapers')
       .where('tags.id IS NOT NULL');
 
     if (query.type) {
       queryTag.andWhere('tags.type =:type', { type: query.type });
     }
 
-    return await queryTag.getMany();
+    const result = await queryTag.getMany();
+
+    const convertTags = _.map(result, (item) => {
+      const wallpapers = item.wallpapers;
+      delete item.wallpapers;
+      return {
+        ...item,
+        count: wallpapers.length,
+      };
+    });
+
+    return convertTags
   }
 
   async findOne(id: string): Promise<Tags> {
